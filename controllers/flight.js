@@ -20,12 +20,29 @@ const getFlights = async (req, res) => {
   var flights = [];
   var response = {};
   try {
-    if (flightClass && stop) {
+    if (flightClass && stop && planeType) {
+      flights = await Flight.find({
+        class: flightClass,
+        stops: { $in: [stop] },
+        planeType: planeType,
+      });
+    } else if (flightClass && planeType) {
+      flights = await Flight.find({
+        class: flightClass,
+        planeType: planeType,
+      });
+    } else if (stop && planeType) {
+      flights = await Flight.find({
+        stops: { $in: [stop] },
+        planeType: planeType,
+      });
+    } else if (flightClass && stop) {
       flights = await Flight.find({
         class: flightClass,
         stops: { $in: [stop] },
       });
     } else if (flightClass) {
+      console.log("flightclass executed!");
       flights = await Flight.find({ class: flightClass });
     } else if (stop) {
       flights = await Flight.find({ stops: { $in: [stop] } });
