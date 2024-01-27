@@ -42,7 +42,6 @@ const getFlights = async (req, res) => {
         stops: { $in: [stop] },
       });
     } else if (flightClass) {
-      console.log("flightclass executed!");
       flights = await Flight.find({ class: flightClass });
     } else if (stop) {
       flights = await Flight.find({ stops: { $in: [stop] } });

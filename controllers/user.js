@@ -28,7 +28,7 @@ const login = async (req, res) => {
     if (!validPassword) return res.status(400).json("wrong password or email");
 
     const token = user.generateAuthToken();
-    res.status(200).json(token);
+    res.status(200).json({ token, user });
   } catch (err) {
     console.error("Error during login:", err.message);
     res.status(500).json(err.message);
