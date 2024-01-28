@@ -84,4 +84,15 @@ const getSingleFlight = (req, res) => {
       res.status(400).json("record not found with this id");
     });
 };
-module.exports = { createFlight, getFlights, getSingleFlight };
+const bookSeat = (req, res) => {
+  const { id } = req.params;
+  Flight.findByIdAndUpdate(id, req.body, { new: true })
+    .then((flight) => {
+      res.status(200).json(flight);
+    })
+    .catch((err) => {
+      res.status(500).json(err.message);
+    });
+};
+
+module.exports = { createFlight, getFlights, getSingleFlight, bookSeat };

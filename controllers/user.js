@@ -12,7 +12,6 @@ const register = async (req, res) => {
     await user.save();
     res.status(200).json(user);
   } catch (err) {
-    console.error("Error during registration:", err.message);
     res.status(500).json(err.message);
   }
 };
