@@ -5,6 +5,7 @@ require("dotenv").config();
 require("./database/DB");
 const userRouter = require("./routes/user");
 const flightRouter = require("./routes/flight");
+const bookingRouter = require("./routes/booking");
 const port = process.env.PORT || 8080;
 
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use(
 );
 app.use("/user", userRouter);
 app.use("/flight", flightRouter);
+app.use("/user-booking", bookingRouter);
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
