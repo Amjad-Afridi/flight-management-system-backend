@@ -3,8 +3,8 @@ const router = express.Router();
 const {
   createFlight,
   getFlights,
-  getSingleFlight,
   bookSeat,
+  getSingleFlight,
 } = require("../controllers/flight");
 
 router.post("/", createFlight);

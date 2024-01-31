@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const {
   userBookingDetails,
-  editUserBookingDetails,
   getUserBookingDetails,
 } = require("../controllers/booking");
 

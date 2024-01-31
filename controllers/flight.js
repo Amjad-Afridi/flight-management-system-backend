@@ -9,6 +9,7 @@ const createFlight = async (req, res) => {
   }
 };
 const getFlights = async (req, res) => {
+  const filter = req.query.filter || {};
   const flightClass = req.query.class || null;
   const planeType = req.query.planeType || null;
   const stop = req.query.stop || null;
@@ -16,7 +17,14 @@ const getFlights = async (req, res) => {
   const limit = parseInt(req.query.limit) || null;
   const startIndex = (page && limit && (page - 1) * limit) || null;
   const endIndex = (page && limit && page * limit) || null;
-
+  // //
+  // if (filter) {
+  //   Flight.find({
+  //     filter,
+  //   })
+  //     .then((results) => res.status(200).json(result))
+  //     .catch((err) => res.status(500).json(err.response));
+  // }
   var flights = [];
   var response = {};
   try {
@@ -74,16 +82,20 @@ const getFlights = async (req, res) => {
   }
 };
 
-const getSingleFlight = (req, res) => {
-  const id = req.params.id;
+const getSingleFlight = async (req, res) => {
+  const { id } = req.params;
   Flight.findById(id)
     .then((flight) => {
+      if (!flight) {
+        return res.status(400).json("no flight with this record");
+      }
       res.status(200).json(flight);
     })
     .catch((err) => {
-      res.status(400).json("record not found with this id");
+      res.status(500).json(err.message);
     });
 };
+
 const bookSeat = (req, res) => {
   const { id } = req.params;
   Flight.findByIdAndUpdate(id, req.body, { new: true })
@@ -95,4 +107,4 @@ const bookSeat = (req, res) => {
     });
 };
 
-module.exports = { createFlight, getFlights, getSingleFlight, bookSeat };
+module.exports = { createFlight, getFlights, bookSeat, getSingleFlight };
